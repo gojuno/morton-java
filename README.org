@@ -5,7 +5,7 @@ Check [[https://en.wikipedia.org/wiki/Z-order_curve][wikipedia]] for details.
 #+BEGIN_SRC java
 import com.gojuno.morton;
 
-Moron64 m = new Morton64(2, 32); // 2 dimenstions 32 bits each
+Morton64 m = new Morton64(2, 32); // 2 dimenstions 32 bits each
 long code = m.pack2(13, 42);     // pack two values
 long[] values = m.unpack2(code); // should get back 13 and 42
 #+END_SRC
