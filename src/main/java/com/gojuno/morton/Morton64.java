@@ -10,6 +10,10 @@ public class Morton64 {
     private long[] rshifts;
 
     public Morton64(long dimensions, long bits) {
+        if (dimensions <= 0 || bits <= 0 || dimensions * bits > 64) {
+            throw new Morton64Exception(String.format("can't make morton64 with %d dimensions and %d bits", dimensions, bits));
+        }
+
         this.dimensions = dimensions;
         this.bits = bits;
 
@@ -66,6 +70,11 @@ public class Morton64 {
     }
 
     public long pack(long... values) {
+        this.dimensionsCheck(values.length);
+        for (int i = 0; i < values.length; i++) {
+            this.valueCheck(values[i]);
+        }
+
         long code = 0;
         for (int i = 0; i < values.length; i++) {
             code |= this.split(values[i]) << i;
@@ -82,6 +91,10 @@ public class Morton64 {
     }
 
     public long pack2(long value0, long value1) {
+        this.dimensionsCheck(2);
+        this.valueCheck(value0);
+        this.valueCheck(value1);
+
         return this.split(value0) | (this.split(value1) << 1);
     }
 
@@ -90,6 +103,11 @@ public class Morton64 {
     }
 
     public long pack3(long value0, long value1, long value2) {
+        this.dimensionsCheck(3);
+        this.valueCheck(value0);
+        this.valueCheck(value1);
+        this.valueCheck(value2);
+
         return this.split(value0) | (this.split(value1) << 1) | (this.split(value2) << 2);
 
     }
@@ -99,8 +117,13 @@ public class Morton64 {
     }
 
     public long pack4(long value0, long value1, long value2, long value3) {
-        return this.split(value0) | (this.split(value1) << 1) | (this.split(value2) << 2) | (this.split(value3) << 3);
+        this.dimensionsCheck(4);
+        this.valueCheck(value0);
+        this.valueCheck(value1);
+        this.valueCheck(value2);
+        this.valueCheck(value3);
 
+        return this.split(value0) | (this.split(value1) << 1) | (this.split(value2) << 2) | (this.split(value3) << 3);
     }
 
     public long spack4(long value0, long value1, long value2, long value3) {
@@ -171,17 +194,33 @@ public class Morton64 {
         return values;
     }
 
+    private void dimensionsCheck(long dimensions) {
+        if (this.dimensions != dimensions) {
+            throw new Morton64Exception(String.format("morton64 with %d dimensions received %d values", this.dimensions, dimensions));
+        }
+    }
+
+    private void valueCheck(long value) {
+        if (value < 0 || value >= (1L << this.bits)) {
+            throw new Morton64Exception(String.format("morton64 with %d bits per dimension received %d to pack", this.bits, value));
+        }
+    }
+
     private long shiftSign(long value) {
+        if (value >= (1L << (this.bits - 1)) || value <= -(1L << (this.bits - 1))) {
+            throw new Morton64Exception(String.format("morton64 with %d bits per dimension received signed %d to pack", this.bits, value));
+        }
+
         if (value < 0) {
             value = -value;
-            value |= 1 << (this.bits - 1);
+            value |= 1L << (this.bits - 1);
         }
         return value;
     }
 
     private long unshiftSign(long value) {
-        long sign = value & (1 << (this.bits - 1));
-        value &= (1 << (this.bits - 1)) - 1;
+        long sign = value & (1L << (this.bits - 1));
+        value &= (1L << (this.bits - 1)) - 1;
         if (sign != 0) {
             value = -value;
         }
