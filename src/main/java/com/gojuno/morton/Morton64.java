@@ -90,46 +90,6 @@ public class Morton64 {
         return this.pack(uvalues);
     }
 
-    public long pack2(long value0, long value1) {
-        this.dimensionsCheck(2);
-        this.valueCheck(value0);
-        this.valueCheck(value1);
-
-        return this.split(value0) | (this.split(value1) << 1);
-    }
-
-    public long spack2(long value0, long value1) {
-        return this.pack2(this.shiftSign(value0), this.shiftSign(value1));
-    }
-
-    public long pack3(long value0, long value1, long value2) {
-        this.dimensionsCheck(3);
-        this.valueCheck(value0);
-        this.valueCheck(value1);
-        this.valueCheck(value2);
-
-        return this.split(value0) | (this.split(value1) << 1) | (this.split(value2) << 2);
-
-    }
-
-    public long spack3(long value0, long value1, long value2) {
-        return this.pack3(this.shiftSign(value0), this.shiftSign(value1), this.shiftSign(value2));
-    }
-
-    public long pack4(long value0, long value1, long value2, long value3) {
-        this.dimensionsCheck(4);
-        this.valueCheck(value0);
-        this.valueCheck(value1);
-        this.valueCheck(value2);
-        this.valueCheck(value3);
-
-        return this.split(value0) | (this.split(value1) << 1) | (this.split(value2) << 2) | (this.split(value3) << 3);
-    }
-
-    public long spack4(long value0, long value1, long value2, long value3) {
-        return this.pack4(this.shiftSign(value0), this.shiftSign(value1), this.shiftSign(value2), this.shiftSign(value3));
-    }
-
     public long[] unpack(long code) {
         long[] values = new long[(int)this.dimensions];
         for (int i = 0; i < values.length; i++) {
@@ -143,54 +103,6 @@ public class Morton64 {
         for (int i = 0; i < values.length; i++) {
             values[i] = this.unshiftSign(values[i]);
         }
-        return values;
-    }
-
-    public long[] unpack2(long code) {
-        long[] values = new long[2];
-        values[0] = this.compact(code);
-        values[1] = this.compact(code >>> 1);
-        return values;
-    }
-
-    public long[] sunpack2(long code) {
-        long[] values = this.unpack2(code);
-        values[0] = this.unshiftSign(values[0]);
-        values[1] = this.unshiftSign(values[1]);
-        return values;
-    }
-
-    public long[] unpack3(long code) {
-        long[] values = new long[3];
-        values[0] = this.compact(code);
-        values[1] = this.compact(code >>> 1);
-        values[2] = this.compact(code >>> 2);
-        return values;
-    }
-
-    public long[] sunpack3(long code) {
-        long[] values = this.unpack3(code);
-        values[0] = this.unshiftSign(values[0]);
-        values[1] = this.unshiftSign(values[1]);
-        values[2] = this.unshiftSign(values[2]);
-        return values;
-    }
-
-    public long[] unpack4(long code) {
-        long[] values = new long[4];
-        values[0] = this.compact(code);
-        values[1] = this.compact(code >>> 1);
-        values[2] = this.compact(code >>> 2);
-        values[3] = this.compact(code >>> 3);
-        return values;
-    }
-
-    public long[] sunpack4(long code) {
-        long[] values = this.unpack4(code);
-        values[0] = this.unshiftSign(values[0]);
-        values[1] = this.unshiftSign(values[1]);
-        values[2] = this.unshiftSign(values[2]);
-        values[3] = this.unshiftSign(values[3]);
         return values;
     }
 
