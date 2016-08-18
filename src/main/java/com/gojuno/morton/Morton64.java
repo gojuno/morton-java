@@ -152,4 +152,21 @@ public class Morton64 {
         }
         return code;
     }
-}
+
+    @Override
+    public String toString() {
+        return String.format("morton64{dimensions: %d, bits: %d}", dimensions, bits);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!Morton64.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        Morton64 other = (Morton64)obj;
+
+        return other.dimensions == dimensions && other.bits == bits;
+    }}

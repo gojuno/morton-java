@@ -3,7 +3,7 @@
 Check [[https://en.wikipedia.org/wiki/Z-order_curve][wikipedia]] for details.
 ** Example
 #+BEGIN_SRC java
-import com.gojuno.morton;
+import com.gojuno.morton.Morton64;
 
 Morton64 m = new Morton64(2, 32); // 2 dimenstions 32 bits each
 long code = m.pack(13, 42);       // pack two values
