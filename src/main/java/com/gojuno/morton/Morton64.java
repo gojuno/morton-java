@@ -70,14 +70,14 @@ public class Morton64 {
     }
 
     public long pack(long... values) {
-        this.dimensionsCheck(values.length);
+        dimensionsCheck(values.length);
         for (int i = 0; i < values.length; i++) {
-            this.valueCheck(values[i]);
+            valueCheck(values[i]);
         }
 
         long code = 0;
         for (int i = 0; i < values.length; i++) {
-            code |= this.split(values[i]) << i;
+            code |= split(values[i]) << i;
         }
         return code;
     }
@@ -85,23 +85,23 @@ public class Morton64 {
     public long spack(long... values) {
         long[] uvalues = new long[values.length];
         for (int i = 0; i < values.length; i++) {
-            uvalues[i] = this.shiftSign(values[i]);
+            uvalues[i] = shiftSign(values[i]);
         }
-        return this.pack(uvalues);
+        return pack(uvalues);
     }
 
     public long[] unpack(long code) {
         long[] values = new long[(int)this.dimensions];
         for (int i = 0; i < values.length; i++) {
-            values[i] = this.compact(code >> i);
+            values[i] = compact(code >> i);
         }
         return values;
     }
 
     public long[] sunpack(long code) {
-        long[] values = this.unpack(code);
+        long[] values = unpack(code);
         for (int i = 0; i < values.length; i++) {
-            values[i] = this.unshiftSign(values[i]);
+            values[i] = unshiftSign(values[i]);
         }
         return values;
     }
@@ -119,20 +119,20 @@ public class Morton64 {
     }
 
     private long shiftSign(long value) {
-        if (value >= (1L << (this.bits - 1)) || value <= -(1L << (this.bits - 1))) {
+        if (value >= (1L << (bits - 1)) || value <= -(1L << (bits - 1))) {
             throw new Morton64Exception(String.format("morton64 with %d bits per dimension received signed %d to pack", this.bits, value));
         }
 
         if (value < 0) {
             value = -value;
-            value |= 1L << (this.bits - 1);
+            value |= 1L << (bits - 1);
         }
         return value;
     }
 
     private long unshiftSign(long value) {
-        long sign = value & (1L << (this.bits - 1));
-        value &= (1L << (this.bits - 1)) - 1;
+        long sign = value & (1L << (bits - 1));
+        value &= (1L << (bits - 1)) - 1;
         if (sign != 0) {
             value = -value;
         }
@@ -140,15 +140,15 @@ public class Morton64 {
     }
 
     private long split(long value) {
-        for (int o = 0; o < this.masks.length; o ++) {
-            value = (value | (value << this.lshifts[o])) & this.masks[o];
+        for (int o = 0; o < masks.length; o ++) {
+            value = (value | (value << lshifts[o])) & masks[o];
         }
         return value;
     }
 
     private long compact(long code) {
-        for (int o = this.masks.length - 1; o >= 0; o--) {
-            code = (code | (code >>> this.rshifts[o])) & this.masks[o];
+        for (int o = masks.length - 1; o >= 0; o--) {
+            code = (code | (code >>> rshifts[o])) & masks[o];
         }
         return code;
     }
