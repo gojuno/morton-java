@@ -49,7 +49,7 @@ public class Morton64 {
                 lshifts.add(shift);
             }
 
-            shift >>= 1;
+            shift >>>= 1;
         }
 
         this.masks = new long[masks.size()];
