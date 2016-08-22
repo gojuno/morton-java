@@ -76,7 +76,7 @@ public class Morton64Test {
     }
 
     @Test
-    public void testPackUnpackArray() throws Exception {
+    public void testPackUnpack() throws Exception {
         doTestPackUnpack(2, 32, 1, 2);
         doTestPackUnpack(2, 32, 2, 1);
         doTestPackUnpack(2, 32, (1L << 32) - 1, (1L << 32) - 1);
@@ -115,7 +115,7 @@ public class Morton64Test {
     }
 
     @Test
-    public void testSPackUnpackArray() throws Exception {
+    public void testSPackUnpack() throws Exception {
         doTestSPackUnpack(2, 32, 1, 2);
         doTestSPackUnpack(2, 32, 2, 1);
         doTestSPackUnpack(2, 32, (1L << 31) - 1, (1L << 31) - 1);

@@ -19,7 +19,7 @@ public class Morton64 {
 
         long mask = (1L << this.bits) - 1;
 
-        long shift = dimensions * (bits - 1);
+        long shift = this.dimensions * (this.bits - 1);
         shift |= shift >>> 1;
         shift |= shift >>> 2;
         shift |= shift >>> 4;
