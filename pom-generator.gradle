@@ -1,0 +1,39 @@
+apply plugin: "maven"
+apply plugin: 'maven-publish'
+
+group = publishedGroupId
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name libraryName
+            description libraryDescription
+            url siteUrl
+
+            groupId publishedGroupId
+            artifactId artifact
+            version project.version
+
+            licenses {
+                license {
+                    name licenseName
+                    url licenseUrl
+                }
+            }
+
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+
+            developers {
+                developer {
+                    id developerId
+                    name developerName
+                    email developerEmail
+                }
+            }
+        }
+    }
+}

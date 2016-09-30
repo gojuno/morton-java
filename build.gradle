@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
     }
 }
 
@@ -24,11 +24,11 @@ ext {
     bintrayKey = System.getenv("BINTRAY_API_KEY")
 
     bintrayRepo = 'maven'
-    bintrayName = 'morton'
+    bintrayName = 'morton-java'
 
     publishedGroupId = 'com.gojuno.morton'
     libraryName = 'morton-java'
-    artifact = 'morton'
+    artifact = 'morton-java'
 
     libraryDescription = 'Morton Pack/Unpack Library'
 
@@ -45,9 +45,9 @@ ext {
     licenseUrl = 'https://github.com/gojuno/morton-java/blob/master/LICENSE'
     allLicenses = ["BSD-3-Clause"]
 
-    // Optional signing
-    gpgSign = false
-    gpgPassphrase = null
+    gpgSign = true
+    gpgPassphrase = System.getenv("BINTRAY_GPG_PASSPHRASE")
 }
 
 apply from: "bintray.gradle"
+apply from: "pom-generator.gradle"

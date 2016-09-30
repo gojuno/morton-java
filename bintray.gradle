@@ -36,8 +36,7 @@ bintray {
             desc = libraryDescription
             gpg {
                 sign = gpgSign
-                passphrase = gpgPassphrase //properties.getProperty("bintray.gpg.password")
-                //Optional. The passphrase for GPG signing'
+                passphrase = gpgPassphrase
             }
         }
     }
