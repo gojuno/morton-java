@@ -24,11 +24,11 @@ ext {
     bintrayKey = System.getenv("BINTRAY_API_KEY")
 
     bintrayRepo = 'maven'
-    bintrayName = 'morton-java'
+    bintrayName = project.name
 
     publishedGroupId = 'com.gojuno.morton'
-    libraryName = 'morton-java'
-    artifact = 'morton-java'
+    libraryName = project.name
+    artifact = project.name
 
     libraryDescription = 'Morton Pack/Unpack Library'
 
@@ -49,5 +49,5 @@ ext {
     gpgPassphrase = System.getenv("BINTRAY_GPG_PASSPHRASE")
 }
 
-apply from: "bintray.gradle"
-apply from: "pom-generator.gradle"
+apply from: "https://raw.githubusercontent.com/gojuno/bintray-upload/master/bintray-upload.gradle"
+apply from: "https://raw.githubusercontent.com/gojuno/bintray-upload/master/pom-generator.gradle"
