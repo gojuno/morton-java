@@ -1,5 +1,8 @@
 apply plugin: 'java'
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
 buildscript {
 
     repositories {
@@ -35,7 +38,7 @@ ext {
     siteUrl = 'https://github.com/gojuno/morton-java'
     gitUrl = 'https://github.com/gojuno/morton-java.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'iced'
     developerName = 'Andrew Kirilenko'
