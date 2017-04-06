@@ -92,6 +92,10 @@ public class Morton64 {
 
     public long[] unpack(long code) {
         long[] values = new long[(int)this.dimensions];
+        return unpack(code, values);
+    }
+
+    public long[] unpack(long code, long[] values) {
         for (int i = 0; i < values.length; i++) {
             values[i] = compact(code >> i);
         }
@@ -99,7 +103,12 @@ public class Morton64 {
     }
 
     public long[] sunpack(long code) {
-        long[] values = unpack(code);
+        long[] values = new long[(int)this.dimensions];
+        return sunpack(code, values);
+    }
+
+    public long[] sunpack(long code, long[] values) {
+        unpack(code, values);
         for (int i = 0; i < values.length; i++) {
             values[i] = unshiftSign(values[i]);
         }
