@@ -73,6 +73,11 @@ public class Morton64Test {
         long code = m.pack(values);
         long[] unpacked = m.unpack(code);
         assertArrayEquals(values, unpacked);
+
+        // Test with both the "return fresh array" and "unpack into array" signatures.
+        unpacked = new long[(int)dimensions];
+        m.unpack(code, unpacked);
+        assertArrayEquals(values, unpacked);
     }
 
     @Test
@@ -111,6 +116,11 @@ public class Morton64Test {
         Morton64 m = new Morton64(dimensions, bits);
         long code = m.spack(values);
         long[] unpacked = m.sunpack(code);
+        assertArrayEquals(values, unpacked);
+
+        // Test with both the "return fresh array" and "unpack into array" signatures.
+        unpacked = new long[(int)dimensions];
+        m.sunpack(code, unpacked);
         assertArrayEquals(values, unpacked);
     }
 
