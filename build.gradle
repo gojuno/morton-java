@@ -38,7 +38,7 @@ ext {
     siteUrl = 'https://github.com/gojuno/morton-java'
     gitUrl = 'https://github.com/gojuno/morton-java.git'
 
-    libraryVersion = '1.0.1'
+    libraryVersion = '1.0.2'
 
     developerId = 'iced'
     developerName = 'Andrew Kirilenko'
